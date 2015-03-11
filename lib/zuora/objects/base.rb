@@ -102,8 +102,8 @@ module Zuora::Objects
     end
 
     def self.query(query_string)
-      result = self.conenctor.query(query_string)
-      generate(result.to_hash, :query_string)
+      result = self.connector.query(query_string)
+      generate(result.to_hash, :query_response)
     end
 
     def self.next
