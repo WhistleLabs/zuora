@@ -49,6 +49,10 @@ namespace :doc do
 
 end
 
+task :console do
+  exec 'irb -r zuora -I ./lib'
+end
+
 task = ARGV.first
 if task && ENV['FORCE'] != 'true' 
   if task == 'spec:integrations'
