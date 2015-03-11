@@ -22,6 +22,7 @@ module Zuora::Objects
     # given a soap response hash, initialize a record
     # and ensure they aren't dirty records.
     def self.generate(soap_hash, type)
+      @query_locator = soap_hash[type][:result][:query_locator]
       result = soap_hash[type][:result]
       return [] if result[:records] == nil
       if result[:size].to_i == 1
@@ -103,6 +104,12 @@ module Zuora::Objects
     def self.query(query_string)
       result = self.conenctor.query(query_string)
       generate(result.to_hash, :query_string)
+    end
+
+    def self.next
+      return false unless @query_locator
+      result = self.connector.query_more(@query_locator)
+      generate(result.to_hash, :query_more_response)
     end
 
     # has this record not been saved?

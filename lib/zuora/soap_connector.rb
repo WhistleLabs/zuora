@@ -13,6 +13,12 @@ module Zuora
       end
     end
 
+    def query_more(query_locator)
+      Zuora::Api.instance.request(:query_more) do |xml|
+        xml.__send__(@model.zns, :queryLocator, query_locator)
+      end
+    end
+
     def serialize(xml, key, value)
       if value.kind_of?(Zuora::Objects::Base)
         xml.__send__(zns, key.to_sym) do |child|
